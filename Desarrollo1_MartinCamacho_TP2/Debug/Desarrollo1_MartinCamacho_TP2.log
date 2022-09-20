@@ -1,0 +1,5 @@
+﻿  main.cpp
+C:\Users\Administrador\source\repos\Desarrollo1_MartinCamacho_TP2\Desarrollo1_MartinCamacho_TP2\main.cpp(33,31): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Administrador\source\repos\Desarrollo1_MartinCamacho_TP2\Desarrollo1_MartinCamacho_TP2\main.cpp(34,31): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Administrador\source\repos\Desarrollo1_MartinCamacho_TP2\Desarrollo1_MartinCamacho_TP2\main.cpp(39,45): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+  Desarrollo1_MartinCamacho_TP2.vcxproj -> C:\Users\Administrador\source\repos\Desarrollo1_MartinCamacho_TP2\Debug\Desarrollo1_MartinCamacho_TP2.exe
