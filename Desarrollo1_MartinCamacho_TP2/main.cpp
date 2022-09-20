@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "cmath"
+#include "raymath.h"
 
 
 using namespace std;
@@ -7,7 +8,7 @@ using namespace std;
 int main()
 {
     // Inicialización
-    InitWindow(640, 480, "Asteroid");
+    InitWindow(1280, 720, "Asteroid");
 
    
     Rectangle ship;
@@ -24,19 +25,20 @@ int main()
     Vector2 mousePos;
     Vector2 shipPos;
     Vector2 dir;
+    Vector2 dirNormalized;
     // Loop
 
     while (!WindowShouldClose())
     {
         // Chequeo de Input
-
+        //a
         mousePos.x = GetMouseX();
         mousePos.y = GetMouseY();
         shipPos.x = ship.x + origin.x;
         shipPos.y = ship.y + origin.y;
         dir.x = mousePos.x - shipPos.x;
         dir.y = mousePos.y - shipPos.y;
-        rotation = atan(dir.y / dir.x)* 180 / 3.14159265358979323846;
+        rotation = atan(dir.y / dir.x)* 180 / PI;
 
         // Actualización
 
