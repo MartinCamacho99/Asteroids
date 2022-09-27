@@ -1,65 +1,78 @@
 #include "raylib.h"
 #include "cmath"
 #include "raymath.h"
-
-
+#include "iostream"
+// 
 using namespace std;
 
 int main()
 {
     // Inicialización
-    InitWindow(1920, 0, "Asteroid");
+    InitWindow(1080, 720, "Asteroid");
+
+    const int MAXSHOOTS = 100;
+    const int RADIUSBULLET = 3;
+    Vector2 origin;
+    Vector2 mousePos;
+    Vector2 shipPos;
+    Vector2 dir;
+    Vector2 dirNormalized;
+    Vector2 shipAce;
 
     struct Bullet
     {
         float centerX;
         float centerY;
         float radius;
+        int timeLife;
+        Vector2 vectorNormalizedbul;
         Color color;
         bool bulletActive;
     };
   
-
     Rectangle ship;
     ship.x = 320;
     ship.y = 240;
     ship.width = 50;
     ship.height = 50;
 
-    Vector2 origin;
+    
     origin.x = ship.width / 2;
     origin.y = ship.height /2;
     float rotation=0;
 
-    Vector2 mousePos;
-    Vector2 shipPos;
-    Vector2 dir;
-    Vector2 dirNormalized;
-    Vector2 dirNormalizedbul;
-    Vector2 shipAce;
+    
     shipAce.x = 1;
     shipAce.y = 1;
 
-    Bullet bullet[100];
-    bullet[1].centerX = 100;
-    bullet[1].centerY = 100;
-    bullet[1].radius = 1;
-    bullet[1].color = YELLOW;
-    bullet[1].bulletActive = false;
+    Bullet bullet[MAXSHOOTS];
+
+    for (int i = 0; i < MAXSHOOTS; i++)
+    {
+        bullet[i].centerX = 0;
+        bullet[i].centerY = 0;
+        bullet[i].radius = RADIUSBULLET;
+        bullet[i].bulletActive = false;
+        bullet[i].timeLife = 0;
+        bullet[i].color = WHITE;
+    }
 
     // Loop
 
     while (!WindowShouldClose())
     {
-        // Chequeo de Input
-        mousePos.x = GetMouseX();
-        mousePos.y = GetMouseY();
+   
+        // Actualización
+
+        mousePos.x = static_cast<float> (GetMouseX());
+        mousePos.y = static_cast<float> (GetMouseY());
         shipPos.x = ship.x + origin.x;
         shipPos.y = ship.y + origin.y;
         dir.x = mousePos.x - shipPos.x;
         dir.y = mousePos.y - shipPos.y;
         rotation = atan(dir.y / dir.x)* 180 / PI;
 
+     
         if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
         {
             dirNormalized = Vector2Normalize(dir);
@@ -67,30 +80,53 @@ int main()
             shipAce.y += dirNormalized.y * 0.1;
         }
 
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
-            bullet[1].bulletActive = true;
-            dirNormalizedbul = Vector2Normalize(dir);
-
-            bullet[1].centerX += dirNormalizedbul.x*0.01;
-            bullet[1].centerY += dirNormalizedbul.y * 0.01;
+            for (int i = 0; i < MAXSHOOTS; i++)
+            {
+                if (!bullet[i].bulletActive)
+                {
+                    bullet[i].centerX = shipPos.x;
+                    bullet[i].centerY = shipPos.y;
+                    bullet[i].vectorNormalizedbul = Vector2Normalize(dir);
+                    bullet[i].bulletActive = true;
+                    break;
+                }
+             
+            }
 
         }
      
 
-        ship.x = ship.x + shipAce.x * GetFrameTime();
-        ship.y = ship.y + shipAce.y * GetFrameTime();
+        ship.x = ship.x + shipAce.x * GetFrameTime()*1;
+        ship.y = ship.y + shipAce.y * GetFrameTime()*1;
         
+        for (int i = 0; i < MAXSHOOTS; i++)
+        {
+            if (bullet[i].bulletActive)
+            {
+           
+                    bullet[i].centerX += bullet[i].vectorNormalizedbul.x * GetFrameTime()*350;
+                    bullet[i].centerY += bullet[i].vectorNormalizedbul.y * GetFrameTime()*350;
+        
+             
+            }
+        }
+        for (int i = 0; i < MAXSHOOTS; i++)
+        {
+            if (bullet[i].bulletActive) bullet[i].timeLife++;
+        }
 
-        // Actualización
-
+        
         // Dibujado
 
         BeginDrawing();
         ClearBackground(BLACK); 
         DrawRectanglePro(ship,origin, rotation,RED);       
-        DrawCircle(bullet[1].centerX, bullet[1].centerY, bullet[1].radius, bullet[1].color);
-
+        for (int i = 0; i < MAXSHOOTS; i++)
+        {
+            if (bullet[i].bulletActive) DrawCircle(bullet[i].centerX, bullet[i].centerY, bullet[i].radius, bullet[i].color);
+        }
 
         EndDrawing();
     }
