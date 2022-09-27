@@ -76,8 +76,8 @@ int main()
         if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
         {
             dirNormalized = Vector2Normalize(dir);
-            shipAce.x += dirNormalized.x*0.1;
-            shipAce.y += dirNormalized.y * 0.1;
+            shipAce.x += dirNormalized.x*0.1f;
+            shipAce.y += dirNormalized.y *0.1f;
         }
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
@@ -125,7 +125,7 @@ int main()
         DrawRectanglePro(ship,origin, rotation,RED);       
         for (int i = 0; i < MAXSHOOTS; i++)
         {
-            if (bullet[i].bulletActive) DrawCircle(bullet[i].centerX, bullet[i].centerY, bullet[i].radius, bullet[i].color);
+            if (bullet[i].bulletActive) DrawCircle(bullet[i].centerX , bullet[i].centerY, bullet[i].radius, bullet[i].color);
         }
 
         EndDrawing();
