@@ -4,6 +4,9 @@
     <Filter Include="Main">
       <UniqueIdentifier>{cbc18bc8-9220-47c5-b870-53e9ecd0b94f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{85cc9305-d88e-472e-bb6d-aa78ba35d081}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
